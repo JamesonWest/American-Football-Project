@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.21"
+    kotlin("jvm") version "1.7.10"
     application
 }
 
-group = "org.example"
+group = "ie.setu"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -14,13 +14,19 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    // dependencies for logging
+    implementation("io.github.microutils:kotlin-logging:2.1.23")
+    implementation("org.slf4j:slf4j-simple:1.7.36")
+    //For Streaming to XML and JSON
+    implementation("com.thoughtworks.xstream:xstream:1.4.18")
+    implementation("org.codehaus.jettison:jettison:1.4.1")
 }
 
 tasks.test {
     useJUnitPlatform()
 }
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "1.8"
 }
 
