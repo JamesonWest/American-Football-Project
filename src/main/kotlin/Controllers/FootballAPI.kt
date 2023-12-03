@@ -5,12 +5,13 @@ import models.Award
 import persistence.Serializer
 import utils.Utilities.isValidListIndex
 
-class FootballAPI(serializerType: Serializer){
+class FootballAPI(serializerType: Serializer) {
 
     private var serializer: Serializer = serializerType
 
     private var Players = ArrayList<Player>()
 
+    private val players: MutableList<Player> = mutableListOf()
     fun add(Player: Player): Boolean {
         return Players.add(Player)
     }
@@ -49,32 +50,32 @@ class FootballAPI(serializerType: Serializer){
     }
 
     fun listAllPlayers(): String =
-        if (Players.isEmpty())  "No Players Stored"
+        if (Players.isEmpty()) "No Players Stored"
         else formatListString(Players)
 
     fun listActivePlayers(): String =
         if (numberOfActivePlayers() == 0) "No Active Players Stored"
-        else formatListString(Players.filter{ Player -> !Player.isPlayerRetired })
+        else formatListString(Players.filter { Player -> !Player.isPlayerRetired })
 
     fun listRetiredPlayers(): String =
         if (numberOfRetiredPlayers() == 0) "No Retired Players Stored"
-        else formatListString(Players.filter{ Player -> Player.isPlayerRetired })
+        else formatListString(Players.filter { Player -> Player.isPlayerRetired })
 
     fun listPlayersBySelectedPriority(priority: Int): String =
         if (Players.isEmpty()) "No Players stored"
         else {
-            val listOfPlayers = formatListString(Players.filter{ Player -> Player.ranking == priority})
+            val listOfPlayers = formatListString(Players.filter { Player -> Player.ranking == priority })
             if (listOfPlayers.equals("")) "No Players with Ranking: $priority"
             else "${numberOfPlayersByPriority(priority)} Players with Ranking $priority: $listOfPlayers"
         }
 
     fun numberOfPlayers(): Int = Players.size
-    fun numberOfActivePlayers(): Int = Players.count{Player: Player -> !Player.isPlayerRetired}
-    fun numberOfRetiredPlayers(): Int = Players.count{Player: Player -> Player.isPlayerRetired}
+    fun numberOfActivePlayers(): Int = Players.count { Player: Player -> !Player.isPlayerRetired }
+    fun numberOfRetiredPlayers(): Int = Players.count { Player: Player -> Player.isPlayerRetired }
     fun numberOfPlayersByPriority(priority: Int): Int = Players.count { p: Player -> p.ranking == priority }
 
-    fun searchByTitle(searchString : String) =
-        formatListString(Players.filter { Player -> Player.name.contains(searchString, ignoreCase = true)})
+    fun searchByTitle(searchString: String) =
+        formatListString(Players.filter { Player -> Player.name.contains(searchString, ignoreCase = true) })
 
     fun findPlayer(index: Int): Player? {
         return if (isValidListIndex(index, Players)) {
@@ -82,7 +83,7 @@ class FootballAPI(serializerType: Serializer){
         } else null
     }
 
-    fun isValidIndex(index: Int) :Boolean{
+    fun isValidIndex(index: Int): Boolean {
         return isValidListIndex(index, Players);
     }
 
@@ -96,9 +97,19 @@ class FootballAPI(serializerType: Serializer){
         serializer.write(Players)
     }
 
-    private fun formatListString(PlayersToFormat : List<Player>) : String =
+    private fun formatListString(PlayersToFormat: List<Player>): String =
         PlayersToFormat
-            .joinToString (separator = "\n") { Player ->
-                Players.indexOf(Player).toString() + ": " + Player.toString() }
+            .joinToString(separator = "\n") { Player ->
+                Players.indexOf(Player).toString() + ": " + Player.toString()
+            }
+
+    fun getPlayerByIndex(index: Int): Player? {
+        return if (isValidIndex(index)) {
+            players[index]
+        } else {
+            null
+        }
+    }
+
 
 }
