@@ -12,14 +12,17 @@ import utils.ValidateInput.readValidPriority
 import java.io.File
 import java.lang.System.exit
 
+// Initialize logger using KotlinLogging library
 private val logger = KotlinLogging.logger {}
-//private val FootballAPI = FootballAPI(XMLSerializer(File("Players.xml")))
+// Create an instance of FootballAPI with a JSON serializer and a file location
 private val footballAPI = FootballAPI(JSONSerializer(File("Players/Awards.json")))
 
+// Entry point of the program
 fun main(args: Array<String>) {
     runMenu()
 }
 
+// Display the main menu and return the selected option
 fun mainMenu() : Int {
     return ScannerInput.readNextInt(""" 
          > ---------------------------------------
@@ -30,8 +33,8 @@ fun mainMenu() : Int {
          > |   2) List Players                   |
          > |   3) Update a Player                |
          > |   4) Delete a Player                |
-         > |   5) Retire/Retire a Player        |
-         > |   6) Search Player(by description)  |
+         > |   5) Retire/Retire a Player         |
+         > |   6) Search Player(by description) |
          > ---------------------------------------
          > |   20) Save Players                  |
          > |   21) Load Players                  |
@@ -41,6 +44,7 @@ fun mainMenu() : Int {
          > ==>> """.trimMargin(">"))
 }
 
+// Run the main menu in a loop until the user chooses to exit
 fun runMenu() {
     do {
         val option = mainMenu()
@@ -59,6 +63,7 @@ fun runMenu() {
     } while (true)
 }
 
+// Read a valid NFL player position from the user
 fun readValidPosition(prompt: String): NFLPosition {
     while (true) {
         try {
@@ -71,6 +76,7 @@ fun readValidPosition(prompt: String): NFLPosition {
     }
 }
 
+// Add a new player to the FootballAPI
 fun addPlayer(){
     val id = readNextInt("Enter player ID Number: ")
     val name = readNextLine("Enter player's Full Name:")
@@ -87,6 +93,7 @@ fun addPlayer(){
     }
 }
 
+// Display a menu for listing players based on user choice
 fun listPlayers(){
     if (footballAPI.numberOfPlayers() > 0) {
         val option = readNextInt(
@@ -109,18 +116,22 @@ fun listPlayers(){
     }
 }
 
+// List all players
 fun listAllPlayers() {
     println(footballAPI.listAllPlayers())
 }
 
+// List only active players
 fun listActivePlayers() {
     println(footballAPI.listActivePlayers())
 }
 
+// List only retired players
 fun listRetiredPlayers() {
     println(footballAPI.listRetiredPlayers())
 }
 
+// Update an existing player's details
 fun updatePlayer() {
     listPlayers()
 
@@ -132,20 +143,22 @@ fun updatePlayer() {
 
         if (existingPlayer != null) {
             println("Current Player Details:")
-            println("Title: ${existingPlayer.title}")
-            println("Priority: ${existingPlayer.priority}")
-            println("Category: ${existingPlayer.category}")
+            println("Name: ${existingPlayer.name}")
+            println("Position: ${existingPlayer.position}")
+            println("Ranking: ${existingPlayer.ranking}")
 
             // Ask the user for updated details
-            val newTitle = readNextLine("Enter a new title for the Player: ")
-            val newPriority = readValidPriority("Enter a new priority (1-low, 2, 3, 4, 5-high): ")
-            val newCategory = readValidCategory("Enter a new category for the Player from ${CategoryUtility.categories}: ")
+            val newTitle = readNextLine("Enter a new name for the Player: ")
+            val newPosition = readValidPosition("Enter player's position: ")
+            val newRanking = readNextInt("Enter a new Rank for the Player: ")
 
             // Create a new Player instance with updated details
             val updatedPlayer = existingPlayer.copy(
-                title = newTitle,
-                priority = newPriority,
-                category = newCategory
+                name = newTitle,
+                position = newPosition,
+                ranking = newRanking,
+                cost = existingPlayer.cost,
+                isPlayerRetired = existingPlayer.isPlayerRetired
             )
 
             // Pass the index of the Player and the new Player details to FootballAPI for updating and check for success.
@@ -160,8 +173,8 @@ fun updatePlayer() {
     }
 }
 
+// Delete an existing player
 fun deletePlayer(){
-    //logger.info { "deletePlayer() function invoked" }
     listPlayers()
     if (footballAPI.numberOfPlayers() > 0) {
         val indexToDelete = readNextInt("Enter the index of the Player to delete: ")
@@ -174,12 +187,14 @@ fun deletePlayer(){
     }
 }
 
+// Retire an active player
 fun retirePlayer() {
     listActivePlayers()
     if (footballAPI.numberOfActivePlayers() > 0) {
-        //only ask the user to choose the Player to Retire if active Players exist
+        // Only ask the user to choose the Player to Retire if active Players exist
         val indexToRetire = readNextInt("Enter the index of the Player to Retire: ")
-        //pass the index of the Player to FootballAPI for archiving and check for success.
+
+        // Pass the index of the Player to FootballAPI for retiring and check for success.
         if (footballAPI.retirePlayer(indexToRetire)) {
             println("Player has been Retired Successfully!")
         } else {
@@ -188,6 +203,7 @@ fun retirePlayer() {
     }
 }
 
+// Search for players based on a description
 fun searchPlayers() {
     val searchTitle = readNextLine("Enter the description to search by: ")
     val searchResults = footballAPI.searchByTitle(searchTitle)
@@ -197,6 +213,8 @@ fun searchPlayers() {
         println(searchResults)
     }
 }
+
+// Save the current state of players to a file
 fun save() {
     try {
         footballAPI.store()
@@ -205,6 +223,7 @@ fun save() {
     }
 }
 
+// Load the players' data from a file
 fun load() {
     try {
         footballAPI.load()
@@ -213,6 +232,7 @@ fun load() {
     }
 }
 
+// Exit the application
 fun exitApp(){
     logger.info { "exitApp() function invoked" }
     exit(0)
