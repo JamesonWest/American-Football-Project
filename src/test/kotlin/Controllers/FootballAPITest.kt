@@ -82,7 +82,7 @@ class FootballAPITest {
 
     @Test
     fun testRetirePlayerValidIndex() {
-        val player = Player(1, "John Doe", 1)
+        val player = Player(1, "John Doe", NFLPosition.RUNNING_BACK, 12000000.00, 1200, false)
         footballAPI.add(player)
         assertTrue(footballAPI.retirePlayer(0))
         assertTrue(footballAPI.getPlayerByIndex(0)?.isPlayerRetired ?: false)
@@ -95,8 +95,8 @@ class FootballAPITest {
 
     @Test
     fun testSearchByTitle() {
-        val player1 = Player(1, "John Doe", 1)
-        val player2 = Player(2, "Jane Doe", 2)
+        val player1 = Player(1, "John Doe", NFLPosition.RUNNING_BACK, 12000000.00, 1200, false)
+        val player2 = Player(12, "Jane Doe", NFLPosition.QUARTERBACK, 12000000.00, 1200, false)
         footballAPI.add(player1)
         footballAPI.add(player2)
 
@@ -106,7 +106,7 @@ class FootballAPITest {
 
     @Test
     fun testLoad() {
-        val playersList = listOf(Player(1, "John Doe", 1), Player(2, "Jane Doe", 2))
+        val playersList = listOf(Player(1, "John Doe", NFLPosition.RUNNING_BACK, 12000000.00, 1200, false))
         whenever(serializer.read()).thenReturn(playersList)
         footballAPI.load()
         assertEquals(playersList.size, footballAPI.numberOfPlayers())
@@ -114,7 +114,7 @@ class FootballAPITest {
 
     @Test
     fun testStore() {
-        val playersList = listOf(Player(1, "John Doe", 1), Player(2, "Jane Doe", 2))
+        val playersList = listOf(Player(1, "John Doe", NFLPosition.RUNNING_BACK, 12000000.00, 1200, false))
         footballAPI.add(playersList[0])
         footballAPI.add(playersList[1])
 

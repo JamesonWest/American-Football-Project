@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36864c2c-547b-46e6-b247-1209c003efc9" name="Changes" comment="add comments to main.kt">
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/Controllers/FootballAPITest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/utils/UtilitiesTest.kt" afterDir="false" />
+    <list default="true" id="36864c2c-547b-46e6-b247-1209c003efc9" name="Changes" comment="Add comments to FootballAPI, add JUnit tests for FootballAPI (only half done)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Controllers/FootballAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Controllers/FootballAPI.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Persistence/JSONSerializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Persistence/JSONSerializer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Persistence/Serializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Persistence/Serializer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Persistence/XMLSerializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Persistence/XMLSerializer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Controllers/FootballAPITest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Controllers/FootballAPITest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +60,60 @@
       <recent name="C:\Users\james\IdeaProjects\American-Football-Project\src\main\kotlin\Utils" />
     </key>
   </component>
+  <component name="RunManager" selected="Gradle.FootballAPITest.testAddPlayer">
+    <configuration name="FootballAPITest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;FootballAPITest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FootballAPITest.testAddPlayer" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;FootballAPITest.testAddPlayer&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.FootballAPITest.testAddPlayer" />
+        <item itemvalue="Gradle.FootballAPITest" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -79,7 +126,7 @@
       <workItem from="1701100353294" duration="1337000" />
       <workItem from="1701524327167" duration="3402000" />
       <workItem from="1701612075850" duration="717000" />
-      <workItem from="1701621874842" duration="10090000" />
+      <workItem from="1701621874842" duration="10249000" />
     </task>
     <task id="LOCAL-00001" summary="port xml, json serializers, implement main functions and API.">
       <created>1701554223820</created>
@@ -102,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701630621809</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add comments to FootballAPI, add JUnit tests for FootballAPI (only half done)">
+      <created>1701632770957</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1701632770957</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,6 +177,7 @@
     <MESSAGE value="port xml, json serializers, implement main functions and API." />
     <MESSAGE value="add to updatePlayer() and addPlayer methods, add mutable list of players in API and getPlayerByIndex()" />
     <MESSAGE value="add comments to main.kt" />
-    <option name="LAST_COMMIT_MESSAGE" value="add comments to main.kt" />
+    <MESSAGE value="Add comments to FootballAPI, add JUnit tests for FootballAPI (only half done)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add comments to FootballAPI, add JUnit tests for FootballAPI (only half done)" />
   </component>
 </project>
