@@ -1,16 +1,13 @@
-import controllers.FootballAPI
+import Controllers.FootballAPI
 import models.NFLPosition
 import models.Player
 import mu.KotlinLogging
-import persistence.JSONSerializer
-import utils.CategoryUtility
-import utils.ScannerInput
+import Persistence.JSONSerializer
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
-import utils.ValidateInput.readValidCategory
-import utils.ValidateInput.readValidPriority
 import java.io.File
-import java.lang.System.exit
+import java.util.*
+import kotlin.system.exitProcess
 
 // Initialize logger using KotlinLogging library
 private val logger = KotlinLogging.logger {}
@@ -18,13 +15,13 @@ private val logger = KotlinLogging.logger {}
 private val footballAPI = FootballAPI(JSONSerializer(File("Players/Awards.json")))
 
 // Entry point of the program
-fun main(args: Array<String>) {
+fun main() {
     runMenu()
 }
 
 // Display the main menu and return the selected option
 fun mainMenu() : Int {
-    return ScannerInput.readNextInt(""" 
+    return readNextInt(""" 
          > ---------------------------------------
          > |          PLAYERS & AWARDS           |
          > ---------------------------------------
@@ -33,8 +30,8 @@ fun mainMenu() : Int {
          > |   2) List Players                   |
          > |   3) Update a Player                |
          > |   4) Delete a Player                |
-         > |   5) Retire/Retire a Player         |
-         > |   6) Search Player(by description) |
+         > |   5) Retire/Archive a Player        |
+         > |   6) Search Player(by description)  |
          > ---------------------------------------
          > |   20) Save Players                  |
          > |   21) Load Players                  |
@@ -47,8 +44,7 @@ fun mainMenu() : Int {
 // Run the main menu in a loop until the user chooses to exit
 fun runMenu() {
     do {
-        val option = mainMenu()
-        when (option) {
+        when (val option = mainMenu()) {
             1  -> addPlayer()
             2  -> listPlayers()
             3  -> updatePlayer()
@@ -58,7 +54,7 @@ fun runMenu() {
             20  -> save()
             21  -> load()
             0  -> exitApp()
-            else -> println("Invalid option entered: ${option}")
+            else -> println("Invalid option entered: $option")
         }
     } while (true)
 }
@@ -68,8 +64,7 @@ fun readValidPosition(prompt: String): NFLPosition {
     while (true) {
         try {
             val input = readNextLine(prompt)
-            val position = NFLPosition.valueOf(input.toUpperCase())
-            return position
+            return NFLPosition.valueOf(input.uppercase(Locale.getDefault()))
         } catch (e: IllegalArgumentException) {
             println("Invalid position. Please enter a valid NFL player position.")
         }
@@ -102,17 +97,19 @@ fun listPlayers(){
                   > |   1) View ALL Players         |
                   > |   2) View ACTIVE Players      |
                   > |   3) View RETIRED Players     |
+                  > |   4) View Players By Rank     |
                   > --------------------------------|
          > ==>> """.trimMargin(">"))
 
         when (option) {
-            1 -> listAllPlayers();
-            2 -> listActivePlayers();
-            3 -> listRetiredPlayers();
-            else -> println("Invalid option entered: " + option);
+            1 -> listAllPlayers()
+            2 -> listActivePlayers()
+            3 -> listRetiredPlayers()
+            4 -> listPlayersByRank()
+            else -> println("Invalid option entered: $option")
         }
     } else {
-        println("Option Invalid - No Players stored");
+        println("Option Invalid - No Players stored")
     }
 }
 
@@ -129,6 +126,12 @@ fun listActivePlayers() {
 // List only retired players
 fun listRetiredPlayers() {
     println(footballAPI.listRetiredPlayers())
+}
+
+// List players by rank
+fun listPlayersByRank() {
+    val priority = readNextInt("Enter the rank to view players: ")
+    println(footballAPI.listPlayersBySelectedRank(priority))
 }
 
 // Update an existing player's details
@@ -235,5 +238,5 @@ fun load() {
 // Exit the application
 fun exitApp(){
     logger.info { "exitApp() function invoked" }
-    exit(0)
+    exitProcess(0)
 }

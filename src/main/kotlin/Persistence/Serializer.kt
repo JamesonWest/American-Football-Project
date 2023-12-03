@@ -1,4 +1,4 @@
-package persistence
+package Persistence
 
 interface Serializer {
     @Throws(Exception::class)

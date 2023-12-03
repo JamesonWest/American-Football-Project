@@ -1,4 +1,4 @@
-package persistence
+package Persistence
 
 import com.thoughtworks.xstream.XStream
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver
